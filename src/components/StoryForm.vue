@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed, onMounted } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import { useSubmit } from '../composables/useSubmit.js'
 import { isRequired, isEmail, validatePhoto } from '../lib/validation.js'
 import { ISSUE_TYPES } from '../lib/storyFields.js'
@@ -12,8 +12,6 @@ const form = reactive({
 })
 const errors = reactive({ name: null, email: null, story: null, photo: null })
 const photoFile = ref(null)
-const startedAt = ref(0)
-onMounted(() => { startedAt.value = Date.now() })
 
 const submitting = computed(() => state.value === 'submitting')
 
@@ -56,7 +54,7 @@ async function onSubmit() {
     type: 'story',
     name: form.name, email: form.email, neighborhood: form.neighborhood,
     issue_types: form.issue_types, story: form.story,
-    photo, hp: form.hp, startedAt: startedAt.value,
+    photo, hp: form.hp,
   })
 }
 </script>

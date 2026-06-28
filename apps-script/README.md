@@ -18,4 +18,4 @@ named **Dunwoody Stormwater Photos** on first use. To export, use the Sheet's
 
 ### Notes
 - Re-deploy (Deploy → Manage deployments → Edit → New version) after editing `Code.gs`.
-- Spam protection: a honeypot field and a minimum fill-time check silently drop bot submissions.
+- Spam protection: a hidden honeypot field silently drops bot submissions.

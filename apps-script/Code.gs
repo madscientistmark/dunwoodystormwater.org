@@ -7,7 +7,6 @@
 var PETITION_SHEET = 'Petitions'
 var STORY_SHEET = 'Stories'
 var PHOTO_FOLDER_NAME = 'Dunwoody Stormwater Photos'
-var MIN_FILL_SECONDS = 3 // submissions faster than this are treated as bots
 
 var PETITION_HEADERS = ['timestamp', 'name', 'email', 'address', 'residency', 'comments', 'updates_optin', 'affirmed', 'source']
 var STORY_HEADERS = ['timestamp', 'name', 'email', 'neighborhood', 'issue_types', 'story', 'photo_url', 'source']
@@ -23,11 +22,8 @@ function doPost(e) {
   try {
     var body = JSON.parse(e.postData.contents)
 
-    // Spam checks: honeypot must be empty; minimum fill time.
+    // Spam check: honeypot must be empty. Bots fill hidden fields; humans can't see it.
     if (body.hp) return json({ ok: true }) // silently drop
-    if (body.startedAt && (Date.now() - Number(body.startedAt)) < MIN_FILL_SECONDS * 1000) {
-      return json({ ok: true }) // silently drop
-    }
 
     if (body.type === 'petition') return handlePetition(body)
     if (body.type === 'story') return handleStory(body)

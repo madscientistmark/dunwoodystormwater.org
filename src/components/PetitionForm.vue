@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, computed, onMounted } from 'vue'
+import { reactive, computed } from 'vue'
 import { useSubmit } from '../composables/useSubmit.js'
 import { isRequired, isEmail } from '../lib/validation.js'
 import { RESIDENCY_OPTIONS } from '../lib/petitionFields.js'
@@ -12,8 +12,6 @@ const form = reactive({
   comments: '', updates_optin: false, affirmed: false, hp: '',
 })
 const errors = reactive({ name: null, email: null, residency: null })
-const startedAt = ref(0)
-onMounted(() => { startedAt.value = Date.now() })
 
 const canSubmit = computed(() => form.affirmed && state.value !== 'submitting')
 
@@ -33,7 +31,7 @@ async function onSubmit() {
     name: form.name, email: form.email, address: form.address,
     residency: form.residency, comments: form.comments,
     updates_optin: form.updates_optin, affirmed: form.affirmed,
-    hp: form.hp, startedAt: startedAt.value,
+    hp: form.hp,
   })
 }
 </script>
