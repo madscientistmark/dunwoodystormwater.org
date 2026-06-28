@@ -112,7 +112,7 @@ async function onSubmit() {
 
     <p v-if="state === 'error'" class="fallback">
       Trouble submitting? Email us at
-      <a href="mailto:info@DunwoodyStormwater.org">info@DunwoodyStormwater.org</a>.
+      <a href="mailto:ddross@bellsouth.net">ddross@bellsouth.net</a>.
     </p>
   </form>
 </template>
