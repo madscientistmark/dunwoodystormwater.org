@@ -30,9 +30,23 @@ npm run preview   # preview the production build locally
 ```
 
 ## Deploy
-The build output in `dist/` is a static SPA. Deploy to any static host:
-- **Netlify / Vercel:** set build command `npm run build`, publish dir `dist`, and add env var `VITE_APPS_SCRIPT_URL`. Add an SPA redirect (`/* -> /index.html`).
-- **GitHub Pages:** build and publish `dist/` (configure a 404 fallback to `index.html` for SPA routing).
+
+### GitHub Pages (current setup)
+This repo auto-deploys to GitHub Pages on every push to `main` via
+`.github/workflows/deploy.yml`. The workflow runs tests, builds, copies
+`index.html` → `404.html` (SPA fallback), and publishes `dist/`.
+
+Required one-time config in the GitHub repo:
+- **Settings → Secrets and variables → Actions →** add secret
+  `VITE_APPS_SCRIPT_URL` = the Apps Script `/exec` URL (kept out of git).
+- **Settings → Pages →** Source: **GitHub Actions**.
+- Custom domain `www.dunwoodystormwater.org` is set via `public/CNAME`
+  (copied into the build). Configure DNS at your registrar (see below).
+
+### Other static hosts
+The build output in `dist/` is a static SPA and works on any static host:
+- **Netlify / Vercel:** build command `npm run build`, publish dir `dist`,
+  env var `VITE_APPS_SCRIPT_URL`, SPA redirect (`/* -> /index.html`).
 
 ## Architecture
 - `src/pages` — one component per route (Home, Petition, Share Your Story, About, FAQ, Contact).
