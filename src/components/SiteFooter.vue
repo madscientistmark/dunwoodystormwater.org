@@ -3,7 +3,7 @@
     <div class="container">
       <p class="footer__tag">Because when the rain falls, we all live downstream.</p>
       <p class="footer__contact">
-        <a href="mailto:info@DunwoodyStormwater.org">info@DunwoodyStormwater.org</a>
+        <a href="mailto:ddross@bellsouth.net">ddross@bellsouth.net</a>
         &nbsp;·&nbsp; www.DunwoodyStormwater.org
       </p>
       <p class="footer__fine">A citizen-led initiative for transparent, consistent stormwater management in Dunwoody.</p>
