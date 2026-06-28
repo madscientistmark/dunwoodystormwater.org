@@ -8,12 +8,22 @@ var PETITION_SHEET = 'Petitions'
 var STORY_SHEET = 'Stories'
 var PHOTO_FOLDER_NAME = 'Dunwoody Stormwater Photos'
 
+// Secret key guarding the signer-roster endpoint (?action=list&key=...).
+// Change this to your own random string and keep it out of anything public-facing.
+// It must match VITE_ROSTER_KEY in the frontend build.
+var ROSTER_KEY = '0TiItGzmBGtA9UI9m_x6p-f_xrD4DvIl'
+
 var PETITION_HEADERS = ['timestamp', 'name', 'email', 'address', 'residency', 'comments', 'updates_optin', 'affirmed', 'source']
 var STORY_HEADERS = ['timestamp', 'name', 'email', 'neighborhood', 'issue_types', 'story', 'photo_url', 'source']
 
 function doGet(e) {
-  if (e && e.parameter && e.parameter.action === 'count') {
+  var params = (e && e.parameter) || {}
+  if (params.action === 'count') {
     return json({ count: countPetitions() })
+  }
+  if (params.action === 'list') {
+    if (params.key !== ROSTER_KEY) return json({ ok: false, error: 'Unauthorized.' })
+    return json({ ok: true, signers: listSigners() })
   }
   return json({ ok: true, message: 'Dunwoody Stormwater API' })
 }
@@ -84,6 +94,24 @@ function getPhotoFolder() {
 function countPetitions() {
   var sheet = getSheet(PETITION_SHEET, PETITION_HEADERS)
   return Math.max(0, sheet.getLastRow() - 1) // minus header row
+}
+
+// Returns the roster of signers. Email is intentionally excluded (minimize PII).
+function listSigners() {
+  var sheet = getSheet(PETITION_SHEET, PETITION_HEADERS)
+  var lastRow = sheet.getLastRow()
+  if (lastRow < 2) return []
+  // Columns (1-indexed): 1 timestamp, 2 name, 4 address, 5 residency.
+  var values = sheet.getRange(2, 1, lastRow - 1, PETITION_HEADERS.length).getValues()
+  return values.map(function (row) {
+    var ts = row[0]
+    return {
+      name: str(row[1]),
+      address: str(row[3]),
+      residency: str(row[4]),
+      timestamp: ts instanceof Date ? ts.toISOString() : str(ts),
+    }
+  })
 }
 
 function getSheet(name, headers) {

@@ -29,6 +29,7 @@ jobs:
       - run: npm run build
         env:
           VITE_APPS_SCRIPT_URL: ${{ secrets.VITE_APPS_SCRIPT_URL }}
+          VITE_ROSTER_KEY: ${{ secrets.VITE_ROSTER_KEY }}
       # SPA fallback: copy index.html to 404.html so client-side routes work.
       - run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3

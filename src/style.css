@@ -34,3 +34,10 @@ a { color: var(--color-primary); }
 .faq__q { font-weight: 700; margin-bottom: 0.25rem; }
 .faq__item { margin-bottom: 1.5rem; }
 @media (max-width: 600px) { .hero h1 { font-size: 2rem; } }
+
+/* When printing, drop the site chrome so pages (e.g. the roster) print clean. */
+@media print {
+  .header, .footer { display: none !important; }
+  main { min-height: 0; }
+  body { background: #fff; }
+}

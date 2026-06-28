@@ -19,3 +19,10 @@ named **Dunwoody Stormwater Photos** on first use. To export, use the Sheet's
 ### Notes
 - Re-deploy (Deploy → Manage deployments → Edit → New version) after editing `Code.gs`.
 - Spam protection: a hidden honeypot field silently drops bot submissions.
+
+### Signer roster endpoint
+- `GET ?action=list&key=<ROSTER_KEY>` returns `{ok:true, signers:[{name,address,residency,timestamp}]}`.
+  Email is intentionally excluded. A wrong/missing key returns `{ok:false}`.
+- Set `ROSTER_KEY` in `Code.gs` to a long random string and keep it private. It must
+  match `VITE_ROSTER_KEY` in the frontend build (GitHub Actions secret).
+- The hidden page that consumes this is the unlinked `/roster-x7k2` route, marked noindex.

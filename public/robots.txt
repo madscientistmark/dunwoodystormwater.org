@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /roster-x7k2
