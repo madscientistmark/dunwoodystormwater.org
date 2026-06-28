@@ -8,6 +8,7 @@ import SignatureCount from '../components/SignatureCount.vue'
     <div class="container">
       <h1>We All Live Downstream</h1>
       <p class="tagline">Because when the rain falls, we all live downstream.</p>
+      <SignatureCount variant="hero" />
       <div class="cta-row">
         <CtaButton to="/petition">Sign the Petition</CtaButton>
         <CtaButton to="/share-your-story" variant="secondary">Share Your Story</CtaButton>
@@ -53,7 +54,6 @@ import SignatureCount from '../components/SignatureCount.vue'
         Every neighborhood deserves to be heard.</p>
       <p>Today we are asking you to take one simple step. Sign the Citizens' Petition for
         Transparent and Consistent Stormwater Management.</p>
-      <SignatureCount />
       <div class="cta-row" style="justify-content:flex-start;">
         <CtaButton to="/petition">Sign the Petition</CtaButton>
       </div>

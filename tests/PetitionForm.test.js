@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { ref } from 'vue'
 
 const submitMock = vi.fn().mockResolvedValue(true)
@@ -37,5 +37,17 @@ describe('PetitionForm', () => {
     expect(submitMock).toHaveBeenCalledTimes(1)
     const payload = submitMock.mock.calls[0][0]
     expect(payload).toMatchObject({ type: 'petition', name: 'Jane Doe', email: 'jane@example.com', residency: 'Yes', affirmed: true })
+  })
+
+  it('emits "submitted" after a successful submission', async () => {
+    submitMock.mockResolvedValueOnce(true)
+    const wrapper = mount(PetitionForm)
+    await wrapper.find('input[name="name"]').setValue('Jane Doe')
+    await wrapper.find('input[name="email"]').setValue('jane@example.com')
+    await wrapper.find('input[name="residency"][value="Yes"]').setValue()
+    await wrapper.find('input[name="affirmed"]').setValue(true)
+    await wrapper.find('form').trigger('submit.prevent')
+    await flushPromises()
+    expect(wrapper.emitted('submitted')).toBeTruthy()
   })
 })

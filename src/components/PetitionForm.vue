@@ -5,6 +5,8 @@ import { isRequired, isEmail } from '../lib/validation.js'
 import { RESIDENCY_OPTIONS } from '../lib/petitionFields.js'
 import FieldError from './FieldError.vue'
 
+const emit = defineEmits(['submitted'])
+
 const { state, error, submit } = useSubmit()
 
 const form = reactive({
@@ -26,13 +28,14 @@ function validate() {
 
 async function onSubmit() {
   if (!validate()) return
-  await submit({
+  const ok = await submit({
     type: 'petition',
     name: form.name, email: form.email, address: form.address,
     residency: form.residency, comments: form.comments,
     updates_optin: form.updates_optin, affirmed: form.affirmed,
     hp: form.hp,
   })
+  if (ok) emit('submitted')
 }
 </script>
 
